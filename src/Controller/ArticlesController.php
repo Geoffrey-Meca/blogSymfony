@@ -48,7 +48,7 @@ class ArticlesController extends AbstractController
     }
 
     #[route('/addArticle', name: 'add_article')]
-    public function addArticle(Post $post, Request $request, EntityManagerInterface $em)
+    public function addArticle(Request $request, EntityManagerInterface $em)
     {
         $article = new Post;
         $form = $this->createForm(PostType::class, $article);
@@ -59,7 +59,7 @@ class ArticlesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($article);
             $em->flush();
-            return $this->show($post->id, $request, $em);
+            return $this->redirectToRoute('show_post', ['id' => $article->getId()]);
         }
 
         return $this->render('articles/addArticle.html.twig', [
