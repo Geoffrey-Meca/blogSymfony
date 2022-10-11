@@ -26,7 +26,7 @@ class ArticlesController extends AbstractController
     }
 
     #[Route('/posts/{id}', name: 'show_post')]
-    public function show(Post $post, Request $request, EntityManagerInterface $em)
+    public function show(Post $post, Request $request, EntityManagerInterface $manager)
     {
         $comment = new Comment;
         $form = $this->createForm(CommentType::class, $comment);
@@ -37,8 +37,8 @@ class ArticlesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($comment);
-            $em->flush();
+            $manager->persist($comment);
+            $manager->flush();
         }
 
         return $this->render('articles/post.html.twig', [
@@ -48,7 +48,7 @@ class ArticlesController extends AbstractController
     }
 
     #[route('/addArticle', name: 'add_article')]
-    public function addArticle(Request $request, EntityManagerInterface $em)
+    public function addArticle(Request $request, EntityManagerInterface $manager)
     {
         $article = new Post;
         $form = $this->createForm(PostType::class, $article);
@@ -57,8 +57,8 @@ class ArticlesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($article);
-            $em->flush();
+            $manager->persist($article);
+            $manager->flush();
             return $this->redirectToRoute('show_post', ['id' => $article->getId()]);
         }
 

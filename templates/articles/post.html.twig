@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container text-center">
-		<div class='row'>
+	<div class="container ">
+		<div class='row d-flex justify-content-center'>
 			<div class='col-md-8'>
 				<img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
 
@@ -15,25 +15,32 @@
 				<p>{{post.author}}
 					-
 					{{post.createdAt |date("d/m/Y") }}</p>
-				<a href="/" class="btn btn-primary">Retour</a>
+				<a href="/" class="btn btn-primary d-flex justify-content-center">Retour</a>
 			</div>
 		</div>
-		<div class="row">
+	</div>
+	<div class="row">
+		<h1>{{ post.comments | length  }}
+			commentaires :</h1>
+		{% if not app.user %}
+			<h2>"Il faut être connecté pour laisser un commentaire !"</h2>
+			<a href="{{ path('security_login')}}" class="btn btn-primary">Connexion !</a>
+		{% else %}
 			<div class="col-md-3">
 				{{ form(form) }}
 				</div>
-				<div class="col-md-9">
-					{% for comment in post.comments %}
-						<div class="card">
-							<div class="card-body">
-								<h5 class="card-title">{{comment.pseudo}}</h5>
-								<h6 class="card-subtitle mb-2 text-muted">{{comment.createdAt |date('d/m/Y')}}</h6>
-								<p class="card-text">{{comment.content}}</p>
-							</div>
+			{% endif %}
+			<div class="col-md-9">
+				{% for comment in post.comments %}
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">{{comment.pseudo}}</h5>
+							<h6 class="card-subtitle mb-2 text-muted">{{comment.createdAt |date('d/m/Y')}}</h6>
+							<p class="card-text">{{comment.content}}</p>
 						</div>
-
-					{% endfor %}
-				</div>
+					</div>
+				{% endfor %}
 			</div>
 		</div>
-	{% endblock %}
+	</div>
+{% endblock %}
