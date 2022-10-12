@@ -28,6 +28,8 @@ class ArticlesController extends AbstractController
     #[Route('/posts/{id}', name: 'show_post')]
     public function show(Post $post, Request $request, EntityManagerInterface $manager)
     {
+
+        // FORM/COMMENTAIRES
         $comment = new Comment;
         $form = $this->createForm(CommentType::class, $comment);
 

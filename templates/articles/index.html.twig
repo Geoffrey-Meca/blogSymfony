@@ -16,7 +16,7 @@
 							<p>{{post.author}}
 								-
 								{{post.createdAt |date("d/m/Y") }}</p>
-							<a href="/posts/{{post.id}}" class="btn btn-primary">Voir l'article</a>
+							<a href="{{path('show_post', {'id': post.id})}}" class="btn btn-primary">Voir l'article</a>
 						</div>
 					</div>
 				</div>
